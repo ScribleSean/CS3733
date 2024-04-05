@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { form } from "../types/form.ts";
+//import ReactDOM from "react-dom";
 import axios from "axios";
-import Box from '@mui/material/Box';
+//import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
+//import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import ToggleButton from '@mui/material/ToggleButton';
@@ -13,7 +14,11 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
-
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
+import "./sanitationForm.css"
+import Paper from '@mui/material/Paper';
 
 export function SanitationForm() {
     const [name, setName] = useState('');
@@ -60,65 +65,122 @@ export function SanitationForm() {
     }
 
     return (
-        <div>
-            <Box sx={{ minWidth: 120 }}>
-                <FormControl fullWidth>
+        <Grid
+            container
+            spacing={5}
+            direction="column"
+            alignItems="center"
+            justifyContent="center"
+            my={4}
+        >
+            <Grid xs={12}>
+                <p className={"title"}>Sanitation Request Form</p>
+            </Grid>
+            <Paper
+                elevation={4}
+            >
+            <Grid xs={1}
+                  alignItems="center"
+                  justifyContent="center"
+                  sx={{ minWidth: 400 }}>
+                <InputLabel style={{
+                    color: "#3B54A0"
+                }}
+                    id="demo-simple-select-label">Name of Requester</InputLabel>
                     <TextField
+                        style={{
+                            borderColor: "#3B54A0",
+                            color: "#3B54A0",
+                            accentColor: "#3B54A0",
+                            borderBlockColor: "#3B54A0"
+                        }}
                         id="outlined-controlled"
-                        label="Name"
+                        label=""
                         value={name}
                         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                             setName(event.target.value);
                         }}
+                        sx={{ minWidth: 400 }}
                     />
-                </FormControl>
-            </Box>
-            <Box sx={{ minWidth: 120 }}>
-                <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label">Priority</InputLabel>
+            </Grid>
+            <Grid xs={1} sx={{ minWidth: 400 }}>
+                    <InputLabel style={{
+                        color: "#3B54A0"
+                    }}
+                        id="priority-dropdown">Priority</InputLabel>
                     <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
                         value={priority}
                         label="Priority"
                         onChange={handlePriorityChange}
+                        sx={{ minWidth: 400 }}
                     >
                         <MenuItem value={"Low"}>Low</MenuItem>
                         <MenuItem value={"Medium"}>Medium</MenuItem>
                         <MenuItem value={"High"}>High</MenuItem>
                         <MenuItem value={"Emergency"}>Emergency</MenuItem>
 
+
                     </Select>
-                </FormControl>
-            </Box>
-            <Box sx={{ minWidth: 120 }}>
-                <FormControl fullWidth>
+            </Grid>
+            <Grid xs={1} sx={{ minWidth: 290 }}>
+                <InputLabel style={{
+                    color: "#3B54A0"
+                }}
+                    id="location-form-field">Location</InputLabel>
                     <TextField
                         id="outlined-controlled"
-                        label="Location"
+                        label=""
                         value={location}
                         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                             setLocation(event.target.value);
                         }}
+                        sx={{ minWidth: 400 }}
                     />
-                </FormControl>
-            </Box>
-
+            </Grid>
+                <Grid xs={6}>
+                <InputLabel style={{
+                    color: "#3B54A0"
+                }}
+                    id="demo-simple-select-label">Request Type</InputLabel>
             <ToggleButtonGroup
                 color="primary"
-                value={requestType}
+                value={requestType} // Use the state value here
                 exclusive
-                onChange={(e) => {
-                    setRequestType(e.target.value);
+                onChange={(_event: React.MouseEvent<HTMLElement>, newValue: string | null) => {
+                    if (newValue !== null) {
+                        setRequestType(newValue); // Update state on change
+                    }
                 }}
-                aria-label="Platform"
+                aria-label="Sanitation Type Buttons"
+                sx={{ minWidth: 120 }}
             >
-                <ToggleButton value="Garbage Pickup">Garbage Pickup</ToggleButton>
-                <ToggleButton value="Recycling Pickup">Recycling Pickup</ToggleButton>
-                <ToggleButton value="Hazardous Waste Disposal">Hazardous Waste Disposal</ToggleButton>
+                <ToggleButton style={{
+                    color: "#A27619",
+                    outlineColor: "#949DB5",
+                    borderColor: "#949DB5"
+                }}
+                    value="Garbage Pickup">Garbage Pickup</ToggleButton>
+                <ToggleButton style={{
+                    color: "#A27619",
+                    outlineColor: "#949DB5",
+                    borderColor: "#949DB5"
+                }}
+                    value="Recycling Pickup">Recycling Pickup</ToggleButton>
+                <ToggleButton style={{
+                    color: "#A27619",
+                    outlineColor: "#949DB5",
+                    borderColor: "#949DB5"
+                }}
+                    value="Hazardous Waste Disposal">Hazardous Waste Disposal</ToggleButton>
             </ToggleButtonGroup>
-            <FormControl>
-                <FormLabel id="demo-controlled-radio-buttons-group">Permission</FormLabel>
+                </Grid>
+                <Grid>
+                <FormLabel style={{
+                    color: "#3B54A0"
+                }}
+                    id="demo-controlled-radio-buttons-group">Permission</FormLabel>
                 <RadioGroup
                     aria-labelledby="demo-controlled-radio-buttons-group"
                     name="controlled-radio-buttons-group"
@@ -127,19 +189,30 @@ export function SanitationForm() {
                         setPermission(e.target.value);
                     }}
                 >
-                    <FormControlLabel value="Only enter with supervision" control={<Radio />} label="Only enter with supervision" />
-                    <FormControlLabel value="Can enter without supervision" control={<Radio />} label="Can enter without supervision" />
+                    <FormControlLabel style={{
+                        color: "#3D4A6B",
+                        font: "Jaldi"
+                    }}
+                                      value="Only enter with supervision" control={<Radio />} label="Only enter with supervision" />
+                    <FormControlLabel style={{
+                        color: "#3D4A6B",
+                        font: "Jaldi"
+                    }}
+                        value="Can enter without supervision" control={<Radio />} label="Can enter without supervision" />
                 </RadioGroup>
-            </FormControl>
-            <Box sx={{ minWidth: 120 }}>
-                <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label">Status</InputLabel>
+                </Grid>
+            <Grid xs={6} sx={{ minWidth: 120 }}>
+                    <InputLabel style={{
+                        color: "#3B54A0"
+                    }}
+                                id="demo-simple-select-label">Status</InputLabel>
                     <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
                         value={status}
                         label="Status"
                         onChange={handleStatusChange}
+                        sx={{ minWidth: 300 }}
                     >
                         <MenuItem value={"Unassigned"}>Unassigned</MenuItem>
                         <MenuItem value={"Assigned"}>Assigned</MenuItem>
@@ -147,27 +220,37 @@ export function SanitationForm() {
                         <MenuItem value={"Closed"}>Closed</MenuItem>
 
                     </Select>
-                </FormControl>
-            </Box>
+            </Grid>
 
-            <button
-                className={
-                    "border-2 w-32 px-5 py-2 rounded-3xl border-gray-400 drop-shadow-xl"
-                }
-                onClick={submit}
+                <Grid>
+            <Stack
+                spacing={2}
+                direction="row"
+                alignItems="center"
+                justifyContent="center"
             >
-                Submit
-            </button>
-            <button
-                className={
-                    "border-2 w-32 px-5 py-2 rounded-3xl border-gray-400 drop-shadow-xl"
-                }
-                onClick={clear}
-            >
-                Clear
-            </button>
-        </div>
+                <Button style={{
+                    color: "#3B54A0",
+                    outlineColor: "#3B54A0",
+                    borderColor: "#3B54A0"
+                }}
+                        variant="outlined"
+                        sx={{ minWidth: 100 }}
+                        onClick={clear}>
+                    Clear
+                </Button>
+                <Button style={{
+                    backgroundColor: "#3B54A0"
+                }}
+                        variant="contained"
+                        sx={{ minWidth: 100 }}
+                        onClick={submit}>
+                    Submit
+                </Button>
+            </Stack>
+                </Grid>
+            </Paper>
+        </Grid>
 
     );
-
 }
