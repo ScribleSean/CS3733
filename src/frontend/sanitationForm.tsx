@@ -73,16 +73,18 @@ export function SanitationForm() {
             justifyContent="center"
             my={4}
         >
-            <Grid xs={12}>
+
                 <p className={"title"}>Sanitation Request Form</p>
-            </Grid>
+
             <Paper
                 elevation={4}
             >
-            <Grid xs={1}
-                  alignItems="center"
-                  justifyContent="center"
-                  sx={{ minWidth: 400 }}>
+                <Stack
+                    alignItems="center"
+                    justifyContent="center"
+                    spacing={2}
+                    p={3}
+                >
                 <InputLabel style={{
                     color: "#3B54A0"
                 }}
@@ -102,8 +104,6 @@ export function SanitationForm() {
                         }}
                         sx={{ minWidth: 400 }}
                     />
-            </Grid>
-            <Grid xs={1} sx={{ minWidth: 400 }}>
                     <InputLabel style={{
                         color: "#3B54A0"
                     }}
@@ -123,8 +123,7 @@ export function SanitationForm() {
 
 
                     </Select>
-            </Grid>
-            <Grid xs={1} sx={{ minWidth: 290 }}>
+
                 <InputLabel style={{
                     color: "#3B54A0"
                 }}
@@ -138,8 +137,6 @@ export function SanitationForm() {
                         }}
                         sx={{ minWidth: 400 }}
                     />
-            </Grid>
-                <Grid xs={6}>
                 <InputLabel style={{
                     color: "#3B54A0"
                 }}
@@ -175,8 +172,6 @@ export function SanitationForm() {
                 }}
                     value="Hazardous Waste Disposal">Hazardous Waste Disposal</ToggleButton>
             </ToggleButtonGroup>
-                </Grid>
-                <Grid>
                 <FormLabel style={{
                     color: "#3B54A0"
                 }}
@@ -200,8 +195,6 @@ export function SanitationForm() {
                     }}
                         value="Can enter without supervision" control={<Radio />} label="Can enter without supervision" />
                 </RadioGroup>
-                </Grid>
-            <Grid xs={6} sx={{ minWidth: 120 }}>
                     <InputLabel style={{
                         color: "#3B54A0"
                     }}
@@ -220,9 +213,7 @@ export function SanitationForm() {
                         <MenuItem value={"Closed"}>Closed</MenuItem>
 
                     </Select>
-            </Grid>
 
-                <Grid>
             <Stack
                 spacing={2}
                 direction="row"
@@ -248,7 +239,7 @@ export function SanitationForm() {
                     Submit
                 </Button>
             </Stack>
-                </Grid>
+                </Stack>
             </Paper>
         </Grid>
 
