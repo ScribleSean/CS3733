@@ -1,7 +1,5 @@
 import { useState } from "react";
-import { form } from "../types/form.ts";
 //import ReactDOM from "react-dom";
-import axios from "axios";
 //import Box from '@mui/material/Box';
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -28,6 +26,10 @@ export function SanitationForm() {
     const [permission, setPermission] = useState("");
     const [status, setStatus] = useState("");
 
+    const [submittedEntries, setSubmittedEntries] = useState([]);
+
+
+
     const handlePriorityChange = (event: SelectChangeEvent) => {
         setPriority(event.target.value as string);
     };
@@ -35,23 +37,18 @@ export function SanitationForm() {
         setStatus(event.target.value as string);
     };
 
-    async function submit() {
-        const sanitionFormData: form = {
+    function submit() {
+        const newEntry = {
             name: name,
             priority: priority,
             location: location,
             requestType: requestType,
             permission: permission,
-            status: status,
+            status: status
         };
-        const res = await axios.post("/api/sanitation", sanitionFormData, {
-            headers: {
-                "content-type": "Application/json",
-            },
-        });
-        if (res.status == 200) {
-            console.log(res.data);
-        }
+        setSubmittedEntries(prevEntries => [...prevEntries, newEntry]);
+        clear();
+
     }
 
     function clear() {
@@ -97,7 +94,7 @@ export function SanitationForm() {
                         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                             setName(event.target.value);
                         }}
-                        sx={{ minWidth: 400 }}
+                        sx={{minWidth: 400}}
                     />
                     <InputLabel
                         style={{
@@ -113,7 +110,7 @@ export function SanitationForm() {
                         value={priority}
                         label="Priority"
                         onChange={handlePriorityChange}
-                        sx={{ minWidth: 400 }}
+                        sx={{minWidth: 400}}
                     >
                         <MenuItem value={"Low"}>Low</MenuItem>
                         <MenuItem value={"Medium"}>Medium</MenuItem>
@@ -136,7 +133,7 @@ export function SanitationForm() {
                         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                             setLocation(event.target.value);
                         }}
-                        sx={{ minWidth: 400 }}
+                        sx={{minWidth: 400}}
                     />
                     <InputLabel
                         style={{
@@ -159,7 +156,7 @@ export function SanitationForm() {
                             }
                         }}
                         aria-label="Sanitation Type Buttons"
-                        sx={{ minWidth: 120 }}
+                        sx={{minWidth: 120}}
                     >
                         <ToggleButton
                             style={{
@@ -214,7 +211,7 @@ export function SanitationForm() {
                                 font: "Jaldi",
                             }}
                             value="Only enter with supervision"
-                            control={<Radio />}
+                            control={<Radio/>}
                             label="Only enter with supervision"
                         />
                         <FormControlLabel
@@ -223,7 +220,7 @@ export function SanitationForm() {
                                 font: "Jaldi",
                             }}
                             value="Can enter without supervision"
-                            control={<Radio />}
+                            control={<Radio/>}
                             label="Can enter without supervision"
                         />
                     </RadioGroup>
@@ -241,7 +238,7 @@ export function SanitationForm() {
                         value={status}
                         label="Status"
                         onChange={handleStatusChange}
-                        sx={{ minWidth: 300 }}
+                        sx={{minWidth: 300}}
                     >
                         <MenuItem value={"Unassigned"}>Unassigned</MenuItem>
                         <MenuItem value={"Assigned"}>Assigned</MenuItem>
@@ -262,7 +259,7 @@ export function SanitationForm() {
                                 borderColor: "#3B54A0",
                             }}
                             variant="outlined"
-                            sx={{ minWidth: 100 }}
+                            sx={{minWidth: 100}}
                             onClick={clear}
                         >
                             Clear
@@ -272,7 +269,7 @@ export function SanitationForm() {
                                 backgroundColor: "#3B54A0",
                             }}
                             variant="contained"
-                            sx={{ minWidth: 100 }}
+                            sx={{minWidth: 100}}
                             onClick={submit}
                         >
                             Submit
@@ -280,6 +277,34 @@ export function SanitationForm() {
                     </Stack>
                 </Stack>
             </Paper>
+            <div className={"justify-items-center w-full text-2xl border-2 border-gray-400 rounded-2xl p-10"}>
+                <table className={"border-collapse border border-gray-800 w-full"}>
+                    <thead>
+                    <tr>
+                        <th className={"border border-gray-800 p-2"}>Name</th>
+                        <th className={"border border-gray-800 p-2"}>Priority</th>
+                        <th className={"border border-gray-800 p-2"}>Location</th>
+                        <th className={"border border-gray-800 p-2"}>Request Type</th>
+                        <th className={"border border-gray-800 p-2"}>Permission</th>
+                        <th className={"border border-gray-800 p-2"}>Status</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {submittedEntries.map((entry, index) => (
+                        <tr key={index}>
+                            <td className={"border border-gray-800 p-2"}>{entry.name}</td>
+                            <td className={"border border-gray-800 p-2"}>{entry.priority}</td>
+                            <td className={"border border-gray-800 p-2"}>{entry.location}</td>
+                            <td className={"border border-gray-800 p-2"}>{entry.requestType}</td>
+                            <td className={"border border-gray-800 p-2"}>{entry.permission}</td>
+                            <td className={"border border-gray-800 p-2"}>{entry.status}</td>
+                        </tr>
+                    ))}
+                    </tbody>
+                </table>
+            </div>
+
         </Grid>
+
     );
 }
